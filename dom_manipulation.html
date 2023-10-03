@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Maison Margiela Thrift Store</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
+	<style>
+		img{
+			width:60%;
+		}
+
+		td{
+			width: 25%;
+		}
+	</style>
+</head>
+<body class="py-5">
+	<div class="container">
+		<div class="row">
+			<h1 class="col-12">Maison Margiela <em>Thrift Store</em></h1>
+		</div> <!-- .row -->
+
+		<div class="row">
+			<div class="col-12 mt-4">
+				<form id="secondhand-posting">
+
+					<div class="form-group row">
+						<label for="category" class="col-3 col-form-label">Category: <span class="text-danger">*</span></label>
+						<div class="col-8 mr-1">
+							<div class="row">
+								<select id="category" class="col-12 form-control">
+									<option value="All Gender">All Gender</option>
+									<option value="Women">Women</option>
+									<option value="Men">Men</option>
+								</select>
+							</div> <!-- .row -->
+							<div class="row">
+								<small id="category-error" class="col-12 form-text"></small>
+							</div> <!-- .row -->
+						</div> <!-- .col-8 -->
+					</div> <!-- .form-group row -->
+
+					<div class="form-group row  mt-2">
+						<label for="item" class="col-3 col-form-label">Item Name: <span class="text-danger">*</span></label>
+						<div class="col-8  mr-1">
+							<div class="row">
+								<input type="text" name="item" class="col-12 form-control" placeholder="Tabi Broken Mirror Brogues" id="item">
+							</div> <!-- .row -->
+							<div class="row">
+								<small id="itemname-error" class="col-12 form-text"></small>
+							</div> <!-- .row -->
+						</div><!-- .col-8 -->
+					</div> <!-- .form-group row -->
+
+					<div class="form-group row">
+						<label class="col-3 col-form-label">Size: <span class="text-danger">*</span></label>
+						
+						<div class="col-1 align-middle form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="size" id="size-small" value="S" checked>
+							<label class="form-check-label my-1" for="size-small">
+								S
+							</label>
+						</div> <!-- .form-check -->
+
+						<div class="col-1 align-middle form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="size" id="size-medium" value="M">
+							<label class="form-check-label my-1" for="size-medium">
+								M
+							</label>
+						</div> <!-- .form-check -->
+
+						<div class="col-1 align-middle form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="size" id="size-large" value="L">
+							<label class="form-check-label my-1" for="size-large">
+								L
+							</label>
+						</div> <!-- .form-check -->
+					</div> <!-- .form-group row -->
+
+					<div class="form-group row">
+						<label for="imageURL" class="col-3 col-form-label">Image URL:</label>
+						<input type="text" name="imageURL" class="col-8 form-control mr-1" placeholder="https://..." id="imageURL">
+					</div> <!-- .form-group row -->
+
+					<div class="row">
+						<small class="col-12 form-text"><span class="text-danger">*</span><em class="text-danger">Required</em></small>
+					</div> <!-- .row -->
+
+					<div class="row justify-content-start">
+						<div class="col-5 col-sm-auto mt-sm-0 ">
+							<button type="submit" class="btn btn-primary mt-4">Post</button>
+							<button type="reset" class="btn mt-4">Reset</button>
+						</div> <!-- .col -->
+					</div> <!-- .row justify-content-end -->
+				</form> 
+			</div> <!-- .col-12 mt-3-->
+		</div> <!-- .row -->
+
+		<div class="row">
+			<h2 class="col-12 mt-5">Items Available:</h2>
+		</div> <!-- .row -->
+
+		<div class="row">
+			<div class="col-5 col-sm-auto mt-sm-0 ">
+				<button id="table-delete-all" type="button" class="btn btn-outline-danger my-2">Delete All</button>
+			</div> <!-- .col -->
+		</div>
+
+		<table id="maison-table" class="table mt-3 mb-4">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Image</th>
+		      <th scope="col">Category</th>
+		      <th scope="col">Item Name</th>
+		      <th scope="col">Size</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <!-- <tr>
+		      <td class="tableImg">
+		      	<img src="https://i.ebayimg.com/images/g/-yoAAOSwKG5hMilG/s-l500.jpg" alt="Tabi">
+		      </td>
+		      <td class="tableGender">Women</td>
+		      <td class="tableItemname">Tabi</td>
+		      <td class="tableSize">S</td>
+		      <td class="tableButton"><button class="item-remove btn btn-outline-danger my-2">Sold</button></td>
+		    </tr> -->
+		  </tbody>
+		</table>
+	</div> <!-- .container -->
+
+	<script>
+		const deleteRowBtn = () => {
+			const buttons = document.querySelectorAll(".item-remove");
+			for (button of buttons) {
+				button.onclick = function() {
+					this.closest('tr').remove()
+				}
+			}
+		}
+
+		deleteRowBtn();
+
+		document.querySelector("#table-delete-all").onclick = () => {
+			document.querySelector("#maison-table tbody").innerHTML = '';
+		}
+
+		document.querySelector("#item").onclick = () =>{
+			document.querySelector("#itemname-error").innerHTML = '';
+		}
+
+		document.querySelector("#secondhand-posting").onsubmit = () => {
+			let tb = document.querySelector("#maison-table tbody");
+			const category_input = document.querySelector("#category").value;
+			const item_name = document.querySelector("#item").value.trim();
+			// var size_selection = document.getElementsByName('size');
+			var size_selection = document.querySelector('input[name="size"]:checked').value;
+			const img_url = document.querySelector("#imageURL").value.trim();
+
+			
+			if ( /^$/.test(item_name) ){
+				document.querySelector("#itemname-error").innerHTML = "This field is required.";
+				document.querySelector("#itemname-error").style.color = "#E00";
+			} else{
+				// check duplicates 
+				const listItems = document.querySelectorAll("#maison-table td"); 
+
+				for (item of listItems) {
+		 			if (item_name == item.innerHTML) {
+		 				document.querySelector("#itemname-error").innerHTML = "The item is posted already. Try something else.";
+						document.querySelector("#itemname-error").style.color = "#E00";
+		 				return false;
+		 			}
+
+		 		}
+
+				// populate the table
+				const firstItem = document.querySelectorAll("#simple-list tbody tr")[0];
+
+			    const tr = document.createElement("tr");
+				const tdImg = document.createElement("td");
+				const tdCate = document.createElement("td");
+				const tdItem = document.createElement("td");
+				const tdSize = document.createElement("td");
+				const tdButton = document.createElement("td");
+				const imgTag = document.createElement("img");
+				const newButton = document.createElement("button");
+
+				if (/^$/.test(img_url)){
+					imgTag.src = "img/maison_margiela_logo.png";
+				} else{
+					imgTag.src = img_url;
+				}
+
+				imgTag.alt = item_name;
+				tdCate.innerHTML = category_input;
+				tdItem.innerHTML = item_name;
+				tdSize.innerHTML = size_selection;
+				newButton.innerHTML = "Sold";
+
+				tdImg.classList.add("tableImg");
+				tdCate.classList.add("tableGender");
+				tdItem.classList.add("tableItemname");
+				tdSize.classList.add("tableSize");
+				tdButton.classList.add("tableButton");
+				newButton.classList.add("item-remove", "btn", "btn-outline-danger", "my-2");
+
+				tdButton.appendChild(newButton);
+				tdImg.appendChild(imgTag);
+
+				tr.appendChild(tdImg);
+				tr.appendChild(tdCate);
+				tr.appendChild(tdItem);
+				tr.appendChild(tdSize);
+				tr.appendChild(tdButton);
+
+				tb.insertBefore(tr, firstItem);
+
+				deleteRowBtn();
+
+				// clear the input field
+				document.querySelector("#item").value = '';
+				document.querySelector("#imageURL").value = '';
+
+
+			}
+
+			// const tablelist = document.querySelectorAll("#maison-table td");
+			// console.log(tablelist)
+
+			return false;
+		}
+
+
+
+	</script>
+</body>
+</html>
+
+
+
+
+
