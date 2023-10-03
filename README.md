@@ -1,5 +1,5 @@
 # Maison-Margiela-Thrift-Store-web-app
-The Maison Margiela Thrift Store web app allows web administrator to post secondhand Maison Margiela items for sale and view a gallery of available items. Administrator can add, arrange, and delete product items from an inventory list.
+The Maison Margiela Thrift Store web app allows web administrator to post secondhand Maison Margiela items for sale and view a gallery of available items. Administrator can add, arrange, and delete product items from an inventory list. Please access the page at https://cicichang11.github.io/Maison-Margiela-Thrift-Store-web-app/dom_manipulation.html
 
 ## Features
 - Add new products to the table with details like image, category, name, and size
